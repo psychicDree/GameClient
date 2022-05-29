@@ -6,24 +6,24 @@ using UnityEngine;
 public class RequestManager : BaseManager
 {
     public RequestManager(GameFacade facade) : base(facade) { }
-    private Dictionary<RequestCode, BaseRequest> _requestsDict = new Dictionary<RequestCode, BaseRequest>();
+    private Dictionary<ActionCode, BaseRequest> _requestsDict = new Dictionary<ActionCode, BaseRequest>();
 
-    public void AddRequest(RequestCode requestCode, BaseRequest baseRequest)
+    public void AddRequest(ActionCode actionCode, BaseRequest baseRequest)
     {
-        _requestsDict.Add(requestCode,baseRequest);
+        _requestsDict.Add(actionCode,baseRequest);
     }
-    public void RemoveRequest(RequestCode requestCode)
+    public void RemoveRequest(ActionCode actionCode)
     {
-        _requestsDict.Remove(requestCode);
+        _requestsDict.Remove(actionCode);
     }
     public override void OnInit()
     {
         
     }
 
-    public void HandleResponse(RequestCode requestCode, string data)
+    public void HandleResponse(ActionCode actionCode, string data)
     {
-        BaseRequest request = _requestsDict.TryGet<RequestCode, BaseRequest>(requestCode);
+        BaseRequest request = _requestsDict.TryGet<ActionCode, BaseRequest>(actionCode);
         request.OnResponse(data);
     }
 

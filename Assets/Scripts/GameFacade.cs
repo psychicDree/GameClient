@@ -61,18 +61,28 @@ public class GameFacade : MonoBehaviour
         _uiManager.OnDestroy();
     }
 
-    public void AddRequest(RequestCode requestCode, BaseRequest baseRequest)
+    public void AddRequest(ActionCode requestCode, BaseRequest baseRequest)
     {
         _requestManager.AddRequest(requestCode, baseRequest);
     }
 
-    public void RemoveRequest(RequestCode requestCode)
+    public void RemoveRequest(ActionCode actionCode)
     {
-        _requestManager.RemoveRequest(requestCode);
+        _requestManager.RemoveRequest(actionCode);
     }
 
-    public void HandleResponse(RequestCode requestCode, string data)
+    public void HandleResponse(ActionCode actionCode, string data)
     {
-        _requestManager.HandleResponse(requestCode, data);
+        _requestManager.HandleResponse(actionCode, data);
+    }
+
+    public void ShowMessage(string msg)
+    {
+        _uiManager.ShowMessage(msg);
+    }
+
+    public void SendRequest(RequestCode requestCode, ActionCode actionCode, string data)
+    {
+        _clientManager.SendRequest(requestCode, actionCode, data);
     }
 }

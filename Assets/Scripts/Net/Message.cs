@@ -26,31 +26,34 @@ public class Message : MonoBehaviour
 		get { return data.Length - startIndex; }
 	}
 
-	public void ReadMessage(int newDataAmount, Action<RequestCode, string> OnProcessDataCallback)
+	public void ReadMessage(int newDataAmount, Action<ActionCode, string> OnProcessDataCallback)
 	{
 		startIndex += newDataAmount;
-		if (startIndex <= 4) return;
-		int count = BitConverter.ToInt32(data, 0);
-		if (startIndex - 4 >= count)
+		while (true)
 		{
-			RequestCode requestCode = (RequestCode)BitConverter.ToInt32(data, 4);
-			string str = Encoding.UTF8.GetString(data, 8, count - 4);
-			OnProcessDataCallback(requestCode, str);
-			Array.Copy(data, count + 4, data, 0, startIndex - 4 - count);
-			startIndex = count + 4;
+			if (startIndex <= 4) return;
+			int count = BitConverter.ToInt32(data, 0);
+			if (startIndex - 4 >= count)
+			{
+				ActionCode actionCode = (ActionCode)BitConverter.ToInt32(data, 4);
+				string str = Encoding.UTF8.GetString(data, 8, count - 4);
+				OnProcessDataCallback(actionCode, str);
+				Array.Copy(data, count + 4, data, 0, startIndex - 4 - count);
+				startIndex -= count + 4;
+			}
+			else
+				break;
 		}
-		else
-			return;
 	}
 
-	public static byte[] PackData(RequestCode requestCode, string data)
-	{
-		byte[] requestCodeBytes = BitConverter.GetBytes((int)requestCode);
-		byte[] dataBytes = Encoding.UTF8.GetBytes(data);
-		int newDataAmount = requestCodeBytes.Length + dataBytes.Length;
-		byte[] newDataAmountBytes = BitConverter.GetBytes(newDataAmount);
-		return newDataAmountBytes.Concat(requestCodeBytes).ToArray().Concat(dataBytes).ToArray();
-	}
+	// public static byte[] PackData(RequestCode requestCode, string data)
+	// {
+	// 	byte[] requestCodeBytes = BitConverter.GetBytes((int)requestCode);
+	// 	byte[] dataBytes = Encoding.UTF8.GetBytes(data);
+	// 	int newDataAmount = requestCodeBytes.Length + dataBytes.Length;
+	// 	byte[] newDataAmountBytes = BitConverter.GetBytes(newDataAmount);
+	// 	return newDataAmountBytes.Concat(requestCodeBytes).ToArray().Concat(dataBytes).ToArray();
+	// }
 	public static byte[] PackData(RequestCode requestCode,ActionCode actionCode, string data)
 	{
 		byte[] requestCodeBytes = BitConverter.GetBytes((int)requestCode);
@@ -58,6 +61,7 @@ public class Message : MonoBehaviour
 		byte[] dataBytes = Encoding.UTF8.GetBytes(data);
 		int newDataAmount = requestCodeBytes.Length + dataBytes.Length+actionCodeBytes.Length;
 		byte[] newDataAmountBytes = BitConverter.GetBytes(newDataAmount);
-		return newDataAmountBytes.Concat(requestCodeBytes).ToArray().Concat(dataBytes).ToArray().Concat(actionCodeBytes).ToArray();
+		byte[] newBytes = newDataAmountBytes.Concat(requestCodeBytes).ToArray().Concat(actionCodeBytes).ToArray();
+		return newBytes.Concat(dataBytes).ToArray();
 	}
 }
