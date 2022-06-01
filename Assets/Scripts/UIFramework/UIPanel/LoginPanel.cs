@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Common;
@@ -20,7 +21,10 @@ public class LoginPanel : BasePanel
         transform.DOScale(1, 0.5f);
         transform.localPosition = new Vector3(650, 0, 0);
         transform.DOLocalMove(Vector3.zero, 0.5f);
-        
+    }
+
+    private void Start()
+    {
         _closeButton = transform.Find("CloseButton").GetComponent<Button>();
         _usernameIf = transform.Find("UsernameLabel/UsernameInput").GetComponent<TMP_InputField>();
         _passwordIf = transform.Find("PasswordLabel/PasswordInput").GetComponent<TMP_InputField>();
@@ -58,18 +62,19 @@ public class LoginPanel : BasePanel
 
     private void OnRegisterClick()
     {
-        
+        uiManager.PushPanel(UIPanelType.Register);
     }
 
     public void OnLoginResponse(ReturnCode returnCode)
     {
+        Debug.Log(returnCode);
         if (returnCode == ReturnCode.Success)
         {
             //TODO open room Panel
         }
         else
         {
-            uiManager.ShowMessage("unable to login...");
+            uiManager.ShowMessageSync("Credential not matched...");
         }
     }
 }

@@ -1,22 +1,20 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Common;
 using UnityEngine;
 
-public class LoginRequest : BaseRequest
+public class RegisterRequest : BaseRequest
 {
-    private LoginPanel _loginPanel;
-
+    private RegisterPanel _registerPanel;
     public override void Awake()
     {
         requestCode = RequestCode.User;
-        actionCode = ActionCode.Login;
-        _loginPanel = GetComponent<LoginPanel>();
+        actionCode = ActionCode.Register;
+        _registerPanel = GetComponent<RegisterPanel>();
         base.Awake();
     }
 
-    public void SendRequest(string username, string password)
+    public void SendRequest(string username,string password)
     {
         string data = username + "," + password;
         base.SendRequest(data);
@@ -25,6 +23,6 @@ public class LoginRequest : BaseRequest
     public override void OnResponse(string data)
     {
         ReturnCode returnCode = (ReturnCode)int.Parse(data);
-        _loginPanel.OnLoginResponse(returnCode);
+        _registerPanel.OnRegisterResponse(returnCode);
     }
 }
