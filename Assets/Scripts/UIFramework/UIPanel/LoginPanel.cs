@@ -17,10 +17,8 @@ public class LoginPanel : BasePanel
     private LoginRequest _loginRequest;
     public override void OnEnter()
     {
-        transform.localScale = Vector3.zero;
-        transform.DOScale(1, 0.5f);
-        transform.localPosition = new Vector3(650, 0, 0);
-        transform.DOLocalMove(Vector3.zero, 0.5f);
+        base.OnEnter();
+        EnterAnimation();
     }
 
     private void Start()
@@ -39,8 +37,9 @@ public class LoginPanel : BasePanel
 
     private void OnCloseClick()
     {
-        transform.DOScale(Vector3.zero, 0.3f);
-        transform.DOLocalMove(new Vector3(650, 0, 0), 0.3f);
+        transform.DOScale(Vector3.zero, 0.4f);
+       Tweener tweener = transform.DOLocalMove(new Vector3(650, 0, 0), 0.4f);
+       tweener.OnComplete(() => uiManager.PopPanel());
     }
 
     public override void OnExit()
@@ -70,11 +69,41 @@ public class LoginPanel : BasePanel
         Debug.Log(returnCode);
         if (returnCode == ReturnCode.Success)
         {
-            //TODO open room Panel
+            uiManager.ShowMessageSync("Login Successful");
+            uiManager.PushPanelSync(UIPanelType.RoomList);
         }
         else
         {
             uiManager.ShowMessageSync("Credential not matched...");
         }
+    }
+
+    private void EnterAnimation()
+    {
+        gameObject.SetActive(true);
+        transform.localScale = Vector3.zero;
+        transform.DOScale(1, 0.5f);
+        transform.localPosition = new Vector3(650, 0, 0);
+        transform.DOLocalMove(Vector3.zero, 0.5f);
+    }
+
+    private void HideAnimation()
+    {
+        transform.DOScale(0, 0.5f);
+        transform.DOLocalMoveX(650, 0.5f).OnComplete(() => gameObject.SetActive(false));
+    }
+
+    public override void OnResume()
+    {
+       base.OnResume();
+       EnterAnimation();
+    }
+
+    public override void OnPause()
+    {
+        base.OnPause();
+        transform.DOScale(0, 0.5f);
+        Tweener tweener = transform.DOLocalMove(new Vector3(650, 0, 0), 0.5f);
+        tweener.OnComplete(() => gameObject.SetActive(false));
     }
 }

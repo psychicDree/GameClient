@@ -40,6 +40,7 @@ public class ClientManager : BaseManager
 
     private void ReceiveCallBack(IAsyncResult ar)
     {
+        if (_clientSocket == null || _clientSocket.Connected == false) return;
         int count = _clientSocket.EndReceive(ar);
         msg.ReadMessage(count, OnProcessDataCallback);
         Start();

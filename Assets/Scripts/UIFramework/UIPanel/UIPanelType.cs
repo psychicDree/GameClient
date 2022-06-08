@@ -8,5 +8,6 @@ public enum UIPanelType  {
     Start,
     Login,
     Register,
-    Message
+    Message,
+    RoomList
 }

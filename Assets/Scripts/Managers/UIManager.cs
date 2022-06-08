@@ -38,10 +38,21 @@ public class UIManager : BaseManager
     private Dictionary<UIPanelType, string> panelPathDict;
     private Dictionary<UIPanelType, BasePanel> panelDict;
     private Stack<BasePanel> panelStack;
-  
+    private UIPanelType _pushPanelType = UIPanelType.None;
+    public void PushPanelSync(UIPanelType panelType)
+    {
+        _pushPanelType = panelType;
+        
+    }
 
-
-   
+    public override void OnUpdate()
+    {
+        if (_pushPanelType != UIPanelType.None)
+        {
+            PushPanel(_pushPanelType);
+            _pushPanelType = UIPanelType.None;
+        }
+    }
 
     public void PushPanel(UIPanelType panelType)
     {
