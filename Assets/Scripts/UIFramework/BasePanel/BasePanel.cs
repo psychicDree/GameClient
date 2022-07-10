@@ -5,7 +5,12 @@ public class BasePanel : MonoBehaviour
 {
 
     protected UIManager uiManager;
+    protected GameFacade facade;
 
+    public GameFacade _facade
+    {
+        set { facade = value; }
+    }
     public UIManager UIManager
     {
         set => uiManager = value;

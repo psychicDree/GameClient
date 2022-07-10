@@ -100,4 +100,14 @@ public class GameFacade : MonoBehaviour
     {
         _clientManager.SendRequest(requestCode, actionCode, data);
     }
+
+    public void SetUserData(UserData userData)
+    {
+        _playerManager.UserData = userData;
+    }
+
+    public UserData GetUserData()
+    {
+        return _playerManager.UserData;
+    }
 }

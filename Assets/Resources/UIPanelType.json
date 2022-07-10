@@ -14,7 +14,9 @@
   "path":"UIPanel/MessagePanel"},
   
   {"panelTypeString":"RoomList",
-    "path":"UIPanel/RoomListPanel"}
+    "path":"UIPanel/RoomListPanel"},
 
+  {"panelTypeString":"Room",
+    "path":"UIPanel/RoomPanel"}
 ]
 }

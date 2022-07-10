@@ -15,8 +15,8 @@ public class UIManager : BaseManager
     
     public override void OnInit()
     {
-       PushPanel(UIPanelType.Start);
-       PushPanel(UIPanelType.Message);
+        PushPanel(UIPanelType.Message);
+        PushPanel(UIPanelType.Start);
     }
 
     public override void OnDestroy()
@@ -42,7 +42,6 @@ public class UIManager : BaseManager
     public void PushPanelSync(UIPanelType panelType)
     {
         _pushPanelType = panelType;
-        
     }
 
     public override void OnUpdate()
@@ -54,7 +53,7 @@ public class UIManager : BaseManager
         }
     }
 
-    public void PushPanel(UIPanelType panelType)
+    public BasePanel PushPanel(UIPanelType panelType)
     {
         if (panelStack == null)
             panelStack = new Stack<BasePanel>();
@@ -68,7 +67,7 @@ public class UIManager : BaseManager
         BasePanel panel = GetPanel(panelType);
         panel.OnEnter();
         panelStack.Push(panel);
-        
+        return panel;
     }
 
     public void PopPanel()
@@ -101,6 +100,7 @@ public class UIManager : BaseManager
             GameObject instPanel = GameObject.Instantiate(Resources.Load(path)) as GameObject;
             instPanel.transform.SetParent(CanvasTransform, false);
             instPanel.GetComponent<BasePanel>().UIManager = this;
+            instPanel.GetComponent<BasePanel>()._facade = facade;
             panelDict.Add(panelType, instPanel.GetComponent<BasePanel>());
             return instPanel.GetComponent<BasePanel>();
         }

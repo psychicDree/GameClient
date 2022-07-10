@@ -9,5 +9,6 @@ public enum UIPanelType  {
     Login,
     Register,
     Message,
-    RoomList
+    RoomList,
+    Room
 }

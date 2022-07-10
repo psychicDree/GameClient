@@ -66,7 +66,6 @@ public class LoginPanel : BasePanel
 
     public void OnLoginResponse(ReturnCode returnCode)
     {
-        Debug.Log(returnCode);
         if (returnCode == ReturnCode.Success)
         {
             uiManager.ShowMessageSync("Login Successful");
@@ -95,15 +94,11 @@ public class LoginPanel : BasePanel
 
     public override void OnResume()
     {
-       base.OnResume();
        EnterAnimation();
     }
 
     public override void OnPause()
     {
-        base.OnPause();
-        transform.DOScale(0, 0.5f);
-        Tweener tweener = transform.DOLocalMove(new Vector3(650, 0, 0), 0.5f);
-        tweener.OnComplete(() => gameObject.SetActive(false));
+        HideAnimation();
     }
 }

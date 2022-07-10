@@ -46,14 +46,6 @@ public class Message : MonoBehaviour
 		}
 	}
 
-	// public static byte[] PackData(RequestCode requestCode, string data)
-	// {
-	// 	byte[] requestCodeBytes = BitConverter.GetBytes((int)requestCode);
-	// 	byte[] dataBytes = Encoding.UTF8.GetBytes(data);
-	// 	int newDataAmount = requestCodeBytes.Length + dataBytes.Length;
-	// 	byte[] newDataAmountBytes = BitConverter.GetBytes(newDataAmount);
-	// 	return newDataAmountBytes.Concat(requestCodeBytes).ToArray().Concat(dataBytes).ToArray();
-	// }
 	public static byte[] PackData(RequestCode requestCode,ActionCode actionCode, string data)
 	{
 		byte[] requestCodeBytes = BitConverter.GetBytes((int)requestCode);
@@ -61,7 +53,8 @@ public class Message : MonoBehaviour
 		byte[] dataBytes = Encoding.UTF8.GetBytes(data);
 		int newDataAmount = requestCodeBytes.Length + dataBytes.Length+actionCodeBytes.Length;
 		byte[] newDataAmountBytes = BitConverter.GetBytes(newDataAmount);
-		byte[] newBytes = newDataAmountBytes.Concat(requestCodeBytes).ToArray().Concat(actionCodeBytes).ToArray();
-		return newBytes.Concat(dataBytes).ToArray();
+		byte[] newBytes1 = newDataAmountBytes.Concat(requestCodeBytes).ToArray();
+		byte[] newBytes2 = newBytes1.Concat(actionCodeBytes).ToArray();
+		return newBytes2.Concat(dataBytes).ToArray();
 	}
 }

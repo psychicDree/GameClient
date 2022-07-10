@@ -24,7 +24,16 @@ public class LoginRequest : BaseRequest
 
     public override void OnResponse(string data)
     {
-        ReturnCode returnCode = (ReturnCode)int.Parse(data);
+        string[] strs = data.Split(',');
+        ReturnCode returnCode = (ReturnCode)int.Parse(strs[0]);
+        if (returnCode == ReturnCode.Success)
+        {
+            string username = strs[1];
+            int totalCount = int.Parse(strs[2]);
+            int winCount = int.Parse(strs[3]);
+            UserData userData = new UserData(username, totalCount, winCount);
+            facade.SetUserData(userData);
+        }
         _loginPanel.OnLoginResponse(returnCode);
     }
 }
