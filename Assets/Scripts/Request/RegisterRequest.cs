@@ -23,6 +23,10 @@ public class RegisterRequest : BaseRequest
     public override void OnResponse(string data)
     {
         ReturnCode returnCode = (ReturnCode)int.Parse(data);
+        if (returnCode == ReturnCode.Success)
+        {
+            
+        }
         _registerPanel.OnRegisterResponse(returnCode);
     }
 }

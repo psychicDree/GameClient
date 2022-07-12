@@ -41,8 +41,12 @@ public class RegisterPanel : BasePanel
 
     public void OnRegisterResponse(ReturnCode returnCode)
     {
-        if(returnCode == ReturnCode.Success) uiManager.ShowMessageSync("Registration SuccessFull");
-        else uiManager.ShowMessageSync("Registration SuccessFull");
+        if (returnCode == ReturnCode.Success)
+        {
+            uiManager.ShowMessageSync("Registration SuccessFull");
+            uiManager.PushPanelSync(UIPanelType.Login);
+        }
+        else uiManager.ShowMessageSync("Registration Failed");
     }
     private void OnCloseClick()
     {
@@ -52,11 +56,32 @@ public class RegisterPanel : BasePanel
 
     public override void OnEnter()
     {
+        EnterAnimation();
+    }
+
+    private void EnterAnimation()
+    {
         gameObject.SetActive(true);
         transform.localScale = Vector3.zero;
         transform.DOScale(1, 0.5f);
         transform.localPosition = new Vector3(650, 0, 0);
         transform.DOLocalMove(Vector3.zero, 0.5f);
+    }
+
+    private void HideAnimation()
+    {
+        transform.DOScale(0, 0.5f);
+        transform.DOLocalMoveX(650, 0.5f).OnComplete(() => gameObject.SetActive(false));
+    }
+
+    public override void OnResume()
+    {
+        EnterAnimation();
+    }
+
+    public override void OnPause()
+    {
+        HideAnimation();
     }
 
     public override void OnExit()
