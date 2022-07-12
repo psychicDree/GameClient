@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -14,16 +15,17 @@ public class RoomPanel : BasePanel
     private UserData UserData;
     private UserData ud1 = null;
     private UserData ud2 = null;
-    private Button StartButton;
+    private StartGameRequest startGameRequest;
     private void Start()
     {
+        startGameRequest = GetComponent<StartGameRequest>();
         localPlayerUsername = transform.Find("BlueTeam/Username").GetComponent<TMP_Text>();
         localPlayerTotalCount = transform.Find("BlueTeam/TotalCount").GetComponent<TMP_Text>();
         localPlayerWinCount = transform.Find("BlueTeam/WinCount").GetComponent<TMP_Text>();
         enemyPlayerUsername = transform.Find("RedTeam/Username").GetComponent<TMP_Text>();
         enemyPlayerTotalCount = transform.Find("RedTeam/TotalCount").GetComponent<TMP_Text>();
         enemyPlayerWinCount = transform.Find("RedTeam/WinCount").GetComponent<TMP_Text>();
-        StartButton = transform.Find("StartButton").GetComponent<Button>();
+        transform.Find("StartButton").GetComponent<Button>().onClick.AddListener(OnStartClick);
     }
 
     public override void OnEnter()
@@ -95,5 +97,21 @@ public class RoomPanel : BasePanel
     {
         BluePanel.DOLocalMoveX(-1000, 0.5f);
         RedPanel.DOLocalMoveX(1000, 0.5f).OnComplete(() => gameObject.SetActive(false));
+    }
+
+    private void OnStartClick()
+    {
+        startGameRequest.SendRequest();
+    }
+    public void OnStartGameResponse(ReturnCode returnCode)
+    {
+        if (returnCode == ReturnCode.Success)
+        {
+            uiManager.PushPanelSync(UIPanelType.Game);
+        }
+        else
+        {
+            uiManager.ShowMessageSync("You are not host.");
+        }
     }
 }

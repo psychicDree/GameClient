@@ -14,6 +14,8 @@ public class RoomItem : MonoBehaviour
     private RoomListPanel _roomListPanel;
     void Start()
     {
+        if(_roomListPanel==null)
+            _roomListPanel = GetComponent<RoomListPanel>();
         joinButton?.onClick.AddListener(OnJoinClick);
     }
 
@@ -33,9 +35,5 @@ public class RoomItem : MonoBehaviour
         this.totalCount.text = totalCount;
         this.winCount.text = winCount;
         this._roomListPanel = roomListPanel;
-    }
-    void Update()
-    {
-        
     }
 }
