@@ -10,6 +10,8 @@ public class PlayerManager : BaseManager
     private UserData userData;
     private Dictionary<RoleType, RoleData> roleDataDict = new Dictionary<RoleType, RoleData>();
     private Transform rolePositions;
+    private RoleType currentRoleType;
+    private GameObject currentRoleGameObject;
     public UserData UserData
     {
         set { userData = value;}
@@ -31,7 +33,37 @@ public class PlayerManager : BaseManager
     {
         foreach (var roleData in roleDataDict.Values)
         {
-            Instantiate(roleData.rolePrefab, roleData.spawnPosition, Quaternion.identity);
+            GameObject go = Instantiate(roleData.rolePrefab, roleData.spawnPosition, Quaternion.identity);
+            if (currentRoleType == roleData.roleType)
+            {
+                currentRoleGameObject = go;
+            }
         }
+    }
+
+    public void SetCurrentRoleType(RoleType rt)
+    {
+        this.currentRoleType = rt;
+    }
+
+    public GameObject GetCurrentGameObject()
+    {
+        return currentRoleGameObject;
+    }
+
+    public void AddControlScript()
+    {
+        currentRoleGameObject.AddComponent<PlayerMove>();
+        PlayerAttack playerAttack = currentRoleGameObject.AddComponent<PlayerAttack>();
+        RoleType rt = currentRoleGameObject.GetComponent<PlayerInfo>().role;
+        RoleData rd = GetRoleDataByRoleType(rt);
+        playerAttack.SetPlayerArrow(rd.arrowPrefab);
+    }
+
+    private RoleData GetRoleDataByRoleType(RoleType rt)
+    {
+        RoleData rd = null;
+        roleDataDict.TryGetValue(rt, out rd);
+        return rd;
     }
 }

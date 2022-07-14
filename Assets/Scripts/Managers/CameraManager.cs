@@ -22,14 +22,14 @@ public class CameraManager : BaseManager
         
     }
 
-    public void FollowTarget(Transform target)
+    public void FollowTarget()
     {
+        followTarget.target = facade.GetCurrentGameObject().transform;
         anim.enabled = false;
         orignalPos = cameraGo.transform.position;
         orignalRot = cameraGo.transform.eulerAngles;
         Quaternion targetQuaternion = Quaternion.LookRotation(followTarget.target.position - cameraGo.transform.position);
         cameraGo.transform.DORotateQuaternion(targetQuaternion, 1f).OnComplete(() => followTarget.enabled = true);
-        //followTarget.target = target;
     }
 
     public void WalkThroughScene()
@@ -42,9 +42,4 @@ public class CameraManager : BaseManager
         });
     }
 
-    public override void OnUpdate()
-    {
-        if(Input.GetMouseButtonDown(0)) FollowTarget((GameObject.Find("BluePlayer") as GameObject).transform);
-        if(Input.GetMouseButtonDown(1)) WalkThroughScene();
-    }
 }

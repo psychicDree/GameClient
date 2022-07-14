@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     private Animator anim;
-    public GameObject arrowPrefab;
+    private GameObject arrowPrefab;
     private Transform leftHandTransform;
 
     private void Start()
@@ -39,5 +39,10 @@ public class PlayerAttack : MonoBehaviour
     private void Shoot(Vector3 dir)
     {
         Instantiate(arrowPrefab, leftHandTransform.position, Quaternion.LookRotation(dir));
+    }
+
+    public void SetPlayerArrow(GameObject go)
+    {
+        arrowPrefab = go;
     }
 }

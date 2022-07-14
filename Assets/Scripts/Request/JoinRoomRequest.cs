@@ -30,15 +30,18 @@ public class JoinRoomRequest : BaseRequest
 
     public override void OnResponse(string data)
     {
-        //returncode-id,username,totalcount,wincount|id,username,totalcount,wincount
+        //returncode,roletype-id,username,totalcount,wincount|id,username,totalcount,wincount
         string[] strs = data.Split('-');
-        ReturnCode returnCode = (ReturnCode) int.Parse(strs[0]);
+        string[] strs1 = strs[0].Split(',');
+        ReturnCode returnCode = (ReturnCode) int.Parse(strs1[0]);
+        RoleType roleType = (RoleType) int.Parse(strs1[1]);
         if (returnCode == ReturnCode.Success)
         {
             string[] udStrArray = strs[1].Split('|');
             userData1 = new UserData(udStrArray[0]);
             userData2 = new UserData(udStrArray[1]);
             roomListPanel.OnJoinResponse(returnCode, userData1, userData2);
+            facade.SetCurrentRoleType(roleType);
         }
     }
 }

@@ -1339,8 +1339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2573115851270127516}
   - component: {fileID: 2515523843172964900}
-  - component: {fileID: 2574710891702499221}
-  - component: {fileID: 2574710891702499216}
+  - component: {fileID: 1618492482208035842}
   m_Layer: 0
   m_Name: BluePlayer
   m_TagString: Untagged
@@ -1385,7 +1384,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2574710891702499221
+--- !u!114 &1618492482208035842
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1394,22 +1393,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2575558612331610564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1feb6eecfd321e643bdfef83ee5488e7, type: 3}
+  m_Script: {fileID: 11500000, guid: e80fe764748a74d43862ace34ae760ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2574710891702499216
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2575558612331610564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73338599c7a2f4e4cb29aca823eb8c1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arrowPrefab: {fileID: 1671383761230552, guid: 95f6e9ca0ec392747baeb9b0b5a40331, type: 3}
+  role: 0
 --- !u!1 &2575574424819978466
 GameObject:
   m_ObjectHideFlags: 0

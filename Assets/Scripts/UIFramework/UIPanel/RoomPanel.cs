@@ -55,6 +55,11 @@ public class RoomPanel : BasePanel
         }
     }
 
+    public override void OnPause()
+    {
+        ExitAnim();
+    }
+
     public void SetLocalPlayerResultSync()
     {
         UserData = facade.GetUserData();
@@ -108,6 +113,7 @@ public class RoomPanel : BasePanel
         if (returnCode == ReturnCode.Success)
         {
             uiManager.PushPanelSync(UIPanelType.Game);
+            facade.EnterPlayingSync();
         }
         else
         {
