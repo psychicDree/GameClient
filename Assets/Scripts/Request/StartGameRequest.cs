@@ -9,7 +9,7 @@ public class StartGameRequest : BaseRequest
 	public override void Awake()
 	{
 		requestCode = RequestCode.Game;
-		actionCode = ActionCode.StartPlay;
+		actionCode = ActionCode.StartGame;
 		roomPanel = GetComponent<RoomPanel>();
 		base.Awake();
 	}

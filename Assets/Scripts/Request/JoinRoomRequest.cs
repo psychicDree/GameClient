@@ -24,7 +24,6 @@ public class JoinRoomRequest : BaseRequest
 
     public void SendRequest(int id)
     {
-        Debug.Log("Joining room of id "+ id);
         base.SendRequest(id.ToString());
     }
 

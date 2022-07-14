@@ -34,6 +34,7 @@ public class RoomListPanel : BasePanel
         _listRoomRequest = GetComponent<ListRoomRequest>();
         CreateRoomRequest = GetComponent<CreateRoomRequest>();
         JoinRoomRequest = GetComponent<JoinRoomRequest>();
+        EnterAnimation();
     }
 
     private void Update()
@@ -48,12 +49,13 @@ public class RoomListPanel : BasePanel
         {
             BasePanel panel = uiManager.PushPanel(UIPanelType.Room);
             (panel as RoomPanel).SetAllPlayerResultSync(UserData1, UserData2);
+            UserData1 = null;
+            UserData2 = null;
         }
     }
 
     public override void OnEnter()
     {
-        if(battleResult!=null) EnterAnimation();
         SetBattleResult();
         if(_listRoomRequest==null) _listRoomRequest = GetComponent<ListRoomRequest>();
         _listRoomRequest.SendRequest();

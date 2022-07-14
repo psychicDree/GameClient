@@ -98,7 +98,7 @@ public class GameFacade : MonoBehaviour
 
     public void ShowMessage(string msg)
     {
-        _uiManager.ShowMessage(msg);
+        _uiManager.ShowMessageSync(msg);
     }
 
     public void SendRequest(RequestCode requestCode, ActionCode actionCode, string data)
@@ -137,8 +137,9 @@ public class GameFacade : MonoBehaviour
         _cameraManager.FollowTarget();
     }
 
-    public void AddControlScript()
+    public void StartPlaying()
     {
         _playerManager.AddControlScript();
+        _playerManager.CreateSyncRequest();
     }
 }

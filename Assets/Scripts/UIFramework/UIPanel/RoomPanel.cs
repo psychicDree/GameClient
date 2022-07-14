@@ -70,19 +70,19 @@ public class RoomPanel : BasePanel
         this.ud1 = ud1;
         this.ud2 = ud2;
     }
-    public void SetLocalPlayerResult(string username, int totalCount, int winCount)
+    private void SetLocalPlayerResult(string username, int totalCount, int winCount)
     {
         localPlayerUsername.text = username;
         localPlayerTotalCount.text = totalCount.ToString();
         localPlayerWinCount.text = winCount.ToString();
     }
-    public void SetEnemyPlayerResult(string username, int totalCount, int winCount)
+    private void SetEnemyPlayerResult(string username, int totalCount, int winCount)
     {
         enemyPlayerUsername.text = username;
         enemyPlayerTotalCount.text = totalCount.ToString();
         enemyPlayerWinCount.text = winCount.ToString();
     }
-    public void ClearEnemyPlayerResult()
+    private void ClearEnemyPlayerResult()
     {
         enemyPlayerUsername.text = "waiting..";
         enemyPlayerTotalCount.text = "--";

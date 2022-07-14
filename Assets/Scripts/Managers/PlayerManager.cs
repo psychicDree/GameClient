@@ -12,6 +12,7 @@ public class PlayerManager : BaseManager
     private Transform rolePositions;
     private RoleType currentRoleType;
     private GameObject currentRoleGameObject;
+    private GameObject playerSyncRequest;
     public UserData UserData
     {
         set { userData = value;}
@@ -26,7 +27,7 @@ public class PlayerManager : BaseManager
     private void InitRoleDataDictionary()
     {
         roleDataDict.Add(RoleType.Blue,new RoleData(RoleType.Blue, "BluePlayer","BlueArrow", rolePositions.Find("Position1").position));
-        roleDataDict.Add(RoleType.Red,new RoleData(RoleType.Blue, "RedPlayer","BlueArrow", rolePositions.Find("Position2").position));
+        roleDataDict.Add(RoleType.Red,new RoleData(RoleType.Red, "RedPlayer","BlueArrow", rolePositions.Find("Position2").position));
     }
 
     public void SpawnRoles()
@@ -65,5 +66,11 @@ public class PlayerManager : BaseManager
         RoleData rd = null;
         roleDataDict.TryGetValue(rt, out rd);
         return rd;
+    }
+
+    public void CreateSyncRequest()
+    {
+       playerSyncRequest = new GameObject("PlayerSyncRequest");
+       playerSyncRequest.AddComponent<MoveRequest>().SetLocalPlayer(currentRoleGameObject.transform,currentRoleGameObject.GetComponent<PlayerMove>());
     }
 }
