@@ -1,18 +1,28 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GamePanel : BasePanel
 {
 	private TMP_Text timer;
 	private int time = -1;
+	private Button gameWonButton;
+	private Button gameLostButton;
 	void Start()
 	{
 		timer = transform.Find("Timer").GetComponent<TMP_Text>();
 		timer.gameObject.SetActive(false);
+		gameWonButton = transform.Find("GameOver/GameWonButton").GetComponent<Button>();
+		gameLostButton = transform.Find("GameOver/GameLostButton").GetComponent<Button>();
+		gameWonButton.gameObject.SetActive(false); 
+		gameLostButton.gameObject.SetActive(false);
+		gameWonButton.onClick.AddListener(OnResultClick);
+		gameLostButton.onClick.AddListener(OnResultClick);
 	}
 
 	public override void OnEnter()
@@ -44,6 +54,12 @@ public class GamePanel : BasePanel
 	{
 		HideAnimation();
 	}
+
+	public override void OnExit()
+	{
+		HideAnimation();
+	}
+
 	private void ShowTimer(int time)
 	{
 		timer.gameObject.SetActive(true);
@@ -67,6 +83,25 @@ public class GamePanel : BasePanel
 		{
 			ShowTimer(time);
 			time = -1;
+		}
+	}
+
+	private void OnResultClick()
+	{
+		uiManager.PopPanel();
+		uiManager.PopPanel();
+		facade.OnGameOver();
+	}
+	public void OnGameOverResponse(ReturnCode returnCode)
+	{
+		switch (returnCode)
+		{
+			case ReturnCode.GameWon:
+				gameWonButton.gameObject.SetActive(true);
+				break;
+			case ReturnCode.GameLost:
+				gameLostButton.gameObject.SetActive(true);
+				break;
 		}
 	}
 }

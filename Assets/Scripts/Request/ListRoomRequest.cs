@@ -16,7 +16,7 @@ public class ListRoomRequest : BaseRequest
 
     public override void SendRequest()
     {
-        base.SendRequest("");
+        base.SendRequest("r");
     }
 
     public override void OnResponse(string data)

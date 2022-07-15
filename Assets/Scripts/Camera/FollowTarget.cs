@@ -9,6 +9,7 @@ public class FollowTarget : MonoBehaviour
     private float smoothing = 2f;
     void Update()
     {
+        if(target==null) return;
         Vector3 targetPosition = target.position + offset;
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothing);
         transform.LookAt(target);

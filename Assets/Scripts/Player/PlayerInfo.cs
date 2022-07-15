@@ -6,4 +6,5 @@ using Common;
 public class PlayerInfo : MonoBehaviour
 {
    public RoleType role;
+   public bool isLocal = false;
 }

@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 3717485482058615440}
   - component: {fileID: 3694543018412860550}
   - component: {fileID: 3607486943432538584}
+  - component: {fileID: 1381422048}
   m_Layer: 0
   m_Name: RedArrow
   m_TagString: Untagged
@@ -258,6 +259,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74716e4af65cc3348a294ceaa4b4dc33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RoleType: 0
+  isLocal: 0
+--- !u!135 &1381422048
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3711553349932056120}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.16
+  m_Center: {x: 0, y: 0, z: -0.24}
 --- !u!1 &3711745410886281436
 GameObject:
   m_ObjectHideFlags: 0

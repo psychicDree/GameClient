@@ -8,11 +8,12 @@ public class PlayerAttack : MonoBehaviour
     private Animator anim;
     private GameObject arrowPrefab;
     private Transform leftHandTransform;
-
+    private PlayerManager playerManager;
     private void Start()
     {
         anim = GetComponent<Animator>();
         leftHandTransform = transform.Find("Erika_Archer_Meshes/Erika_Archer_Bow_Mesh");
+        leftHandTransform.position += new Vector3(0, 0, 1);
     }
 
     private void Update()
@@ -36,9 +37,14 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    public void SetPlayerManager(PlayerManager playerManager)
+    {
+        this.playerManager = playerManager;
+    }
     private void Shoot(Vector3 dir)
     {
-        Instantiate(arrowPrefab, leftHandTransform.position, Quaternion.LookRotation(dir));
+        playerManager.Shoot(arrowPrefab, leftHandTransform.position,Quaternion.LookRotation(dir));
+        
     }
 
     public void SetPlayerArrow(GameObject go)

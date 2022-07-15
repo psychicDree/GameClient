@@ -22,7 +22,7 @@ public class CreateRoomRequest : BaseRequest
 
     public override void SendRequest()
     {
-        base.SendRequest("");
+        base.SendRequest("r");
     }
 
     public override void OnResponse(string data)

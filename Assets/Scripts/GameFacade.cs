@@ -142,4 +142,15 @@ public class GameFacade : MonoBehaviour
         _playerManager.AddControlScript();
         _playerManager.CreateSyncRequest();
     }
+
+    public void SendAttack(int damage)
+    {
+        _playerManager.SendAttack(damage);
+    }
+
+    public void OnGameOver()
+    {
+        _playerManager.GameOver();
+        _cameraManager.WalkThroughScene();
+    }
 }

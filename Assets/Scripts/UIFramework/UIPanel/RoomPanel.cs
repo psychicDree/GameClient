@@ -60,6 +60,11 @@ public class RoomPanel : BasePanel
         ExitAnim();
     }
 
+    public override void OnExit()
+    {
+        ExitAnim();
+    }
+
     public void SetLocalPlayerResultSync()
     {
         UserData = facade.GetUserData();
