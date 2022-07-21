@@ -40,7 +40,6 @@ public class RoomPanel : BasePanel
         if (UserData != null)
         {
             SetLocalPlayerResult(UserData.username,UserData.totalCount,UserData.winCount);
-            ClearEnemyPlayerResult();
             UserData = null;
         }
 

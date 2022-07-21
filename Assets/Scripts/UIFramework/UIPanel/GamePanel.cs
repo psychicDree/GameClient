@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Common;
 using DG.Tweening;
 using TMPro;
@@ -13,18 +10,27 @@ public class GamePanel : BasePanel
 	private int time = -1;
 	private Button gameWonButton;
 	private Button gameLostButton;
+	private Button gameLeaveButton;
+	private LeaveRequest leaveRequest;
+	private ReturnCode returnCode;
+	private string data;
+	private bool isUserLeave;
+	
 	void Start()
 	{
 		timer = transform.Find("Timer").GetComponent<TMP_Text>();
 		timer.gameObject.SetActive(false);
 		gameWonButton = transform.Find("GameOver/GameWonButton").GetComponent<Button>();
 		gameLostButton = transform.Find("GameOver/GameLostButton").GetComponent<Button>();
+		gameLeaveButton = transform.Find("CloseRoomButton").GetComponent<Button>();
+		leaveRequest = GetComponent<LeaveRequest>();
 		gameWonButton.gameObject.SetActive(false); 
 		gameLostButton.gameObject.SetActive(false);
 		gameWonButton.onClick.AddListener(OnResultClick);
 		gameLostButton.onClick.AddListener(OnResultClick);
+		gameLeaveButton.onClick.AddListener(OnLeaveClick);
 	}
-
+	
 	public override void OnEnter()
 	{
 		EnterAnimation();
@@ -84,8 +90,13 @@ public class GamePanel : BasePanel
 			ShowTimer(time);
 			time = -1;
 		}
-	}
 
+		if (isUserLeave)
+		{
+			OnLeaveResponse();
+			isUserLeave = false;
+		}
+	}
 	private void OnResultClick()
 	{
 		uiManager.PopPanel();
@@ -102,6 +113,26 @@ public class GamePanel : BasePanel
 			case ReturnCode.GameLost:
 				gameLostButton.gameObject.SetActive(true);
 				break;
+		}
+	}
+	private void OnLeaveClick()
+	{
+		leaveRequest.SendResponse();
+	}
+	public void OnLeaveResponseSync(ReturnCode returnCode, string data)
+	{
+		this.returnCode = returnCode;
+		this.data = data;
+		isUserLeave = true;
+	}
+	private void OnLeaveResponse()
+	{
+		if (returnCode == ReturnCode.Success)
+		{
+			facade.ShowMessage(data);
+			uiManager.PopPanel();
+			uiManager.PopPanel();
+			facade.OnHostLeave();
 		}
 	}
 }

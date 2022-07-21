@@ -14,7 +14,9 @@ public class GameFacade : MonoBehaviour
     private UIManager _uiManager;
     private bool isEnterPlaying = false;
     private static GameFacade _instance;
+    
     public static GameFacade Instance => _instance;
+    
     private void Awake()
     {
         if (_instance != null)
@@ -24,12 +26,10 @@ public class GameFacade : MonoBehaviour
         }
         _instance = this;
     }
-
     private void Start()
     {
         OnInitManager();
     }
-
     private void OnInitManager()
     {
         _clientManager = new ClientManager(this);
@@ -46,7 +46,6 @@ public class GameFacade : MonoBehaviour
         _requestManager.OnInit();
         _uiManager.OnInit();
     }
-
     private void OnDestroy()
     {
         OnDestroyManager();
@@ -60,7 +59,6 @@ public class GameFacade : MonoBehaviour
         _requestManager.OnDestroy();
         _uiManager.OnDestroy();
     }
-
     private void Update()
     {
         UpdateAllManagers();
@@ -70,7 +68,6 @@ public class GameFacade : MonoBehaviour
             isEnterPlaying = false;
         }
     }
-
     private void UpdateAllManagers()
     {
         _clientManager.OnUpdate();
@@ -80,77 +77,67 @@ public class GameFacade : MonoBehaviour
         _requestManager.OnUpdate();
         _uiManager.OnUpdate();
     }
-
     public void AddRequest(ActionCode requestCode, BaseRequest baseRequest)
     {
         _requestManager.AddRequest(requestCode, baseRequest);
     }
-
     public void RemoveRequest(ActionCode actionCode)
     {
         _requestManager.RemoveRequest(actionCode);
     }
-
     public void HandleResponse(ActionCode actionCode, string data)
     {
         _requestManager.HandleResponse(actionCode, data);
     }
-
     public void ShowMessage(string msg)
     {
         _uiManager.ShowMessageSync(msg);
     }
-
     public void SendRequest(RequestCode requestCode, ActionCode actionCode, string data)
     {
         _clientManager.SendRequest(requestCode, actionCode, data);
     }
-
     public void SetUserData(UserData userData)
     {
         _playerManager.UserData = userData;
     }
-
     public UserData GetUserData()
     {
         return _playerManager.UserData;
     }
-
     public void SetCurrentRoleType(RoleType rt)
     {
         _playerManager.SetCurrentRoleType(rt);
     }
-
     public GameObject GetCurrentGameObject()
     {
         return _playerManager.GetCurrentGameObject();
     }
-
     public void EnterPlayingSync()
     {
         isEnterPlaying = true;
     }
-
     private void EnterPlaying()
     {
         _playerManager.SpawnRoles();
         _cameraManager.FollowTarget();
     }
-
     public void StartPlaying()
     {
         _playerManager.AddControlScript();
         _playerManager.CreateSyncRequest();
     }
-
     public void SendAttack(int damage)
     {
         _playerManager.SendAttack(damage);
     }
-
     public void OnGameOver()
     {
         _playerManager.GameOver();
         _cameraManager.WalkThroughScene();
+    }
+    public void OnHostLeave()
+    {
+        OnGameOver();
     }
 }
